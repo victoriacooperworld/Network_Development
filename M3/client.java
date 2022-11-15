@@ -15,15 +15,14 @@ public class client {
     public static void main(String[] args) {
         try{
             try (Socket socket = new Socket("localhost", 8000)) {
-                OutputStream output = socket.getOutputStream();
-                BufferedWriter clientOutput = new BufferedWriter(new OutputStreamWriter(output,StandardCharsets.UTF_8));
-                StringBuilder cmd = new StringBuilder();
                 while(true){
+                    OutputStream output = socket.getOutputStream();
+                    BufferedWriter clientOutput = new BufferedWriter(new OutputStreamWriter(output,StandardCharsets.UTF_8));
+                    StringBuilder cmd = new StringBuilder();
                     System.out.println("Please type in a command: ");
                     BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
                     String keyIn = keyboard.readLine();
                     cmd.append(keyIn);
-                    System.out.println("User command: " + cmd.toString());
                     clientOutput.write(cmd.toString()+"\n");
                     clientOutput.flush();
 
@@ -33,8 +32,7 @@ public class client {
                     for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                         System.out.println(line);
                     }
-                    System.out.println("Over!");
-
+    
                 }
             }
         }catch(Exception e){

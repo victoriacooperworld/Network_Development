@@ -14,24 +14,21 @@ import java.net.Socket;
 public class server {
     public static void main(String[] args) {
         String dir = args[0];
-
         try (ServerSocket serverSocket = new ServerSocket(8000)) {
             Socket socket =serverSocket.accept();
             System.out.println("Connect to the server!");
-            InputStream in = socket.getInputStream();
-            System.out.println(in.toString());
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-     
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            
             while(true){
+                InputStream in = socket.getInputStream();
+                System.out.println(in.toString());
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 if (new File(dir).isDirectory()){
                     File dirPath = new File(dir);
                     File[] files = dirPath.listFiles();
                     //check the client command
                     //since the file path is valid, we either return indexes or the content
                     String cmd = br.readLine();
-                    System.out.println("user command:"+cmd);
-                    System.out.println("Server side command" + cmd);
                     if (cmd.equals("index")){
                         System.out.println("hello index");
                         if (files.length == 0){
